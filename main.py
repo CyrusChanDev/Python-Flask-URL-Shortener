@@ -37,4 +37,5 @@ def redirect_url(simplified_short_url):
 
 
 if __name__ == "__main__":
-    app.run(port=9091, debug=True)
+    # host="0.0.0.0" is necessary because the app is dockerized and 127.0.0.1 is a loopback address
+    app.run(host="0.0.0.0", port=9091, debug=True)

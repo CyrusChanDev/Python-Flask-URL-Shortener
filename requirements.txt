@@ -1,0 +1,2 @@
+flask
+connexion[uvicorn]  # this library install looks strange but it is intentional
