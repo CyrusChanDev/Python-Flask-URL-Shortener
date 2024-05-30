@@ -2,3 +2,5 @@ flask
 connexion[uvicorn]  # this library install looks strange but it is intentional
 requests==2.31.0
 mysql-connector-python
+pylint
+pylint-fail-under
