@@ -1,6 +1,8 @@
 import string
 import random
 from flask import Flask, render_template, redirect, request
+import mysql.connector
+db = mysql.connector.connect(host="mydb", user="root", password="root", port=3306)
 
 
 app = Flask(__name__)

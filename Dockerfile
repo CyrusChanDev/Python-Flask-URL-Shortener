@@ -10,6 +10,7 @@ RUN pip3 install -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
-EXPOSE 9091
+# depends_on in docker-compose is not sufficient to determine the actual status of the database service within the container.
+RUN chmod +x /app/utils/wait-for-it.sh 
 
-CMD ["python3", "main.py"]
+EXPOSE 9091
