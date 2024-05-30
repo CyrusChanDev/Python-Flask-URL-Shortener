@@ -1,6 +1,7 @@
 import string
 import random
 from flask import Flask, render_template, redirect, request
+import subprocess
 import mysql.connector
 #db = mysql.connector.connect(host="mydb", user="root", password="root", port=3306)
 
@@ -39,5 +40,6 @@ def redirect_url(simplified_short_url):
 
 
 if __name__ == "__main__":
+    subprocess.call(["python", "./database/create_tables_mysql.py"])
     # host="0.0.0.0" is necessary because the app is dockerized and 127.0.0.1 is a loopback address
     app.run(host="0.0.0.0", port=9091, debug=True)
