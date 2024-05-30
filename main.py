@@ -2,7 +2,7 @@ import string
 import random
 from flask import Flask, render_template, redirect, request
 import mysql.connector
-db = mysql.connector.connect(host="mydb", user="root", password="root", port=3306)
+#db = mysql.connector.connect(host="mydb", user="root", password="root", port=3306)
 
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ def index():
         simplified_short_url = generate_short_url(length=5)
 
         while simplified_short_url in shortened_urls:  # if randomized shortened URLs collide, run function again
-            simplified_short_url = generate_short_url(length=6)
+            simplified_short_url = generate_short_url(length=5)
         shortened_urls[simplified_short_url] = user_long_url
         return render_template("index.html", short_url=simplified_short_url)
     
