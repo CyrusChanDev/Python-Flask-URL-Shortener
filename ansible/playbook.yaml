@@ -1,0 +1,26 @@
+---
+- hosts: web
+  become: yes
+  vars:
+    github_repo_url: "https://github.com/CyrusChanDev/Python-Flask-URL-Shortener.git"
+    github_token: "{{ lookup('file', '~/github_token.txt') }}"
+  tasks:
+    - name: update apt
+      apt:
+        update_cache: yes
+
+    - name: Install software
+      apt:
+        name: 
+          - vim
+          - git
+          - docker-compose
+          - python3-pip
+          - docker.io
+        state: present
+    
+    - name: Clone the GitHub repository
+      git:
+        repo: "https://{{ github_token }}@github.com/CyrusChanDev/Python-Flask-URL-Shortener.git"
+        dest: /tmp/personal_project
+        version: main

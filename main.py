@@ -8,8 +8,6 @@ import mysql.connector
 
 
 app = Flask(__name__)
-db_conn =  mysql.connector.connect(host="mydb", user="root", password="root", port=3306, database="url_shortener")
-db_cursor = db_conn.cursor()
 
 
 def generate_short_url(length=5):
@@ -51,10 +49,12 @@ def redirect_url(simplified_short_url):
     return "URL does not exist on our server.", 404
 
 
-if __name__ == "__main__":
-    subprocess.call(["python", "./database/create_tables_mysql.py"])
+subprocess.call(["python", "./database/create_tables_mysql.py"])
 
-    # host="0.0.0.0" is necessary because the app is dockerized and 127.0.0.1 is a loopback address
-    app.run(host="0.0.0.0", port=9091, debug=True)
+db_conn =  mysql.connector.connect(host="mydb", user="root", password="root", port=3306, database="url_shortener")
+db_cursor = db_conn.cursor()
 
-    db_conn.close()
+# host="0.0.0.0" is necessary because the app is dockerized and 127.0.0.1 is a loopback address
+app.run(host="0.0.0.0", port=9091, debug=True)
+
+db_conn.close()

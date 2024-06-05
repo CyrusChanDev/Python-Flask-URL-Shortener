@@ -79,6 +79,14 @@ resource "aws_security_group" "allow_ssh_http" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description      = "Port used by the application"
+    from_port        = 9091
+    to_port          = 9091
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -101,7 +109,7 @@ resource "aws_key_pair" "deploy_key" {
 resource "aws_instance" "app_server" {
   subnet_id                   = aws_subnet.subnet.id
   ami                         = "ami-03c983f9003cb9cd1"     # Ubuntu server 22.04 LTS 64-bit
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.allow_ssh_http.id]
   key_name = aws_key_pair.deploy_key.key_name

@@ -1,7 +1,7 @@
 import mysql.connector
 import subprocess
 
-subprocess.call(["utils/wait-for-it.sh", "mydb:3306"])
+subprocess.call(["utils/wait-for-it.sh","-t", "90", "mydb:3306"])
 db_conn =  mysql.connector.connect(host="mydb", user="root", password="root", port=3306)
 db_cursor = db_conn.cursor()
 
