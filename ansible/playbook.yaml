@@ -5,7 +5,7 @@
     github_repo_url: "https://github.com/CyrusChanDev/Python-Flask-URL-Shortener.git"
     github_token: "{{ lookup('file', '~/github_token.txt') }}"
   tasks:
-    - name: update apt
+    - name: Update apt
       apt:
         update_cache: yes
 
@@ -24,3 +24,6 @@
         repo: "https://{{ github_token }}@github.com/CyrusChanDev/Python-Flask-URL-Shortener.git"
         dest: /tmp/personal_project
         version: main
+
+    - name: Setup application using Docker-compose
+      shell: sudo docker-compose -f /tmp/personal_project/docker-compose.yaml up -d --build
