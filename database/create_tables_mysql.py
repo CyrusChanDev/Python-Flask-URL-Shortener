@@ -18,7 +18,7 @@ db_config = {
 }
 
 subprocess.call(["utils/wait-for-it.sh","-t", f"{db_config['wait_timeout']}", f"{db_config['host']}:{db_config['port']}"])
-db_conn =  mysql.connector.connect(host=db_config["host"], user=db_config["user"], password=db_config["password"], port=db_config["port"], database=db_config["database"])
+db_conn =  mysql.connector.connect(host=db_config["host"], user=db_config["user"], password=db_config["password"], port=db_config["port"])
 db_cursor = db_conn.cursor()
 
 
