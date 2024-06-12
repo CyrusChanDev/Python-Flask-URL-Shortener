@@ -1,6 +1,6 @@
 # VPC
 resource "aws_vpc" "url_shortener_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr_block
   tags = {
     Name = "url_shortener_VPC"
   }
@@ -9,8 +9,8 @@ resource "aws_vpc" "url_shortener_vpc" {
 # Subnet
 resource "aws_subnet" "subnet" {
   vpc_id            = aws_vpc.url_shortener_vpc.id
-  availability_zone = "us-west-2a"
-  cidr_block        = "10.0.10.0/24"
+  availability_zone = var.subnet_availability_zone
+  cidr_block        = var.subnet_cidr_block
   tags = {
     Name = "url_shortener_VPC_SUBNET"
   }
@@ -30,7 +30,7 @@ resource "aws_route_table" "routes" {
   vpc_id = aws_vpc.url_shortener_vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.route_table_cidr_block
     gateway_id = aws_internet_gateway.gw.id
   }
 
