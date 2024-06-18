@@ -1,17 +1,18 @@
 version: "3"
 services:
   db:
-    container_name: mydb
+    env_file: ./configs/.env
+    container_name: ${DB_HOST}
     image: mysql:8.0
     ports: 
-      - "3306:3306"
+      - ${DB_PORT}:${DB_PORT}
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
   app:
-    container_name: myapp
+    container_name: ${APP_HOST}
     depends_on:
       - db
     build: ./
     ports:
-      - "9091:9091"
-    entrypoint: ["./utils/wait-for-it.sh", "mydb:3306", "--", "python", "main.py"]
+      - ${APP_PORT}:${APP_PORT}
+    entrypoint: ["./utils/wait-for-it.sh", "-t", "${DB_WAIT_TIMEOUT}", "${DB_HOST}:${DB_PORT}", "--", "python", "main.py"]

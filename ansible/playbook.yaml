@@ -26,4 +26,4 @@
         version: main
 
     - name: Setup application using Docker-compose
-      shell: sudo docker-compose -f /tmp/personal_project/docker-compose.yaml up -d --build
+      shell: sudo docker-compose -f /tmp/personal_project/docker-compose.yaml --env-file /tmp/personal_project/configs/.env up -d --build
