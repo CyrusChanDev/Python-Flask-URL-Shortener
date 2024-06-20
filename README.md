@@ -16,7 +16,7 @@ While the core functionality is a URL shortener, the primary focus is on the Ops
 
 Please ensure the following software are installed:
 - Python
-- Python Flask library
+- Python libraries (complete list in `./requirements.txt`)
 - Docker (and Docker Compose)
 - Terraform
 - Ansible
@@ -45,9 +45,17 @@ When you see the message `* Running on https://127.0.0.1:9091` the application i
 
 Navigate to `./terraform` and run the following command in terminal:
 
-`terraform apply -var-file=terraform.tfvars`
+`terraform apply -var-file=../configs/terraform.tfvars -auto-approve`  
 
 When you see the output of the provisioned EC2 instance's public IPv4 IP address, you will know that this step is complete.  
+
+![terraformapply](./images/terraform_apply.png)
+
+To tear down the cloud infrastructure in the future, run the following command in terminal also in `./terraform`:
+
+`terraform destroy -var-file=../configs/terraform.tfvars -auto-approve`
+
+![terraformdestroy](./images/terraform_destroy.png)
   
   Please wait 30 seconds to ensure that the EC2 instance is fully booted up and then run this command in `./ansible` to allow Ansible to configure the machine accordingly — including setting up the application via Docker Compose:
 
@@ -55,10 +63,37 @@ When you see the output of the provisioned EC2 instance's public IPv4 IP address
 
 `dynamic_inventory.py` will automatically retrieve the provisioned EC2's machine public IPv4, you do NOT need to manually edit any files. If you see an error, you will need to use `chmod` and make the `dynamic_inventory.py` executable so that Ansible has the necessary permissions to treat it as a dynamic inventory file.
 
+![ansibleplaybook](./images/ansible_playbook.png)
+
 Ansible will let you know when it has completed its magic and then you can access the site at `http://{your_ec2_instance_public_ipv4_ip}:9091` 
+
+![indexhtml](./images/index_html.png)
 
 ---
 
-## Credits and Contact
+## Screenshots/Demo
+
+As an example, we can shorten the URL of the YouTube website:
+
+![youtubeexampleurl](./images/youtube_example_url.png)
+
+To shorten the URL, simply enter it in the text box. It will return randomly generated characters:
+
+![youtubeexampleurlshortened](./images/youtube_example_url_shortened.png)
+
+Success! Now when you go to `http://{your_ec2_instance_public_ipv4_ip}:9091/shortenedURL` you will be redirected to the YouTube website:
+
+![youtubeexampleurlredirectionproof](./images/youtube_example_url_redirection_proof.png)
+
+If there is no previous history of the characters being generated, you will see an error message:
+
+![nonexistenturl](./images/non-existent_url.png)
+
+The same process will work for any website.
+
+
+---
+
+## Credits
 
 All work in this GitHub repository is completed by me - Cyrus Chan. With the exception of `./utils/wait-for-it.sh` which I did not develop, the original work can be found here: https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh
