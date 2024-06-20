@@ -2,6 +2,7 @@
 - hosts: web
   become: yes
   vars:
+    ansible_python_interpreter: /usr/bin/python3.10
     github_repo_url: "https://github.com/CyrusChanDev/Python-Flask-URL-Shortener.git"
     github_token: "{{ lookup('file', '~/github_token.txt') }}"
   tasks:
