@@ -1,6 +1,5 @@
 ---
 - hosts: web
-  become: yes
   vars:
     ansible_python_interpreter: /usr/bin/python3.10
     github_repo_url: "https://github.com/CyrusChanDev/Python-Flask-URL-Shortener.git"
@@ -9,6 +8,7 @@
     - name: Update apt
       apt:
         update_cache: yes
+      become: yes
 
     - name: Install software
       apt:
@@ -19,6 +19,7 @@
           - python3-pip
           - docker.io
         state: present
+      become: yes
     
     - name: Clone the GitHub repository
       git:
@@ -27,4 +28,5 @@
         version: main
 
     - name: Setup application using Docker-compose
-      shell: sudo docker-compose -f /tmp/personal_project/docker-compose.yaml --env-file /tmp/personal_project/configs/.env up -d --build
+      shell: docker-compose -f /tmp/personal_project/docker-compose.yaml --env-file /tmp/personal_project/configs/.env up -d --build
+      become: yes
